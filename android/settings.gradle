@@ -1,0 +1,3 @@
+rootProject.name = 'ppwxClient'
+
+include ':app'
