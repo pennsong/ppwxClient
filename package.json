@@ -6,7 +6,17 @@
     "start": "react-native start"
   },
   "dependencies": {
+    "ddp-client": "^0.1.2",
+    "event-emitter": "^0.3.4",
+    "lodash": "^4.6.1",
     "react": "^0.14.7",
-    "react-native": "^0.22.2"
+    "react-native": "^0.22.2",
+    "react-native-button": "^1.4.2",
+    "react-native-navbar": "^1.4.1",
+    "react-native-router-redux": "^0.2.2",
+    "react-redux": "^4.4.1",
+    "redux": "^3.3.1",
+    "redux-thunk": "^2.0.1",
+    "underscore": "^1.8.3"
   }
 }
