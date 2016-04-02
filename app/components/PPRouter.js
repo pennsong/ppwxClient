@@ -46,9 +46,9 @@ const store = createStore(
 
 const mapStateToProps = state => ({
   router: state.router,
-  pics: state.pics,
-  user: state.user,
-  friends: state.friends
+  // pics: state.pics,
+  // user: state.user,
+  // friends: state.friends
 });
 
 const mapDispatchToProps = (dispatch) => ({

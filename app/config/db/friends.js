@@ -2,20 +2,30 @@ let ddpClient = require('./lib/ddpClient');
 
 let FriendsDB = {};
 
+let observer
+
 FriendsDB.subscribeToFriends = () => {
   return ddpClient.subscribe('friends', [])
 };
 
 FriendsDB.observeFriends = (cb) => {
-  let observer = ddpClient.connection.collections.observe(() => {
-    return ddpClient.connection.collections.friends.find();
-  });
-
-  observer.subscribe((results) => {
-    cb(results);
-  });
+  // observer = ddpClient.connection.collections.observe(() => {
+  //   return ddpClient.connection.collections.friends.find();
+  // });
+  //
+  // observer.subscribe((results) => {
+  //   cb(results);
+  // });
+  observer = ddpClient.connection.observe('friends',
+      ()=>cb(ddpClient.connection.collections.friends.find()),
+      ()=>cb(ddpClient.connection.collections.friends.find()),
+      ()=>cb(ddpClient.connection.collections.friends.find())
+  )
 };
 
+FriendsDB.stopObserve = () =>{
+  observer.stop()
+}
 // FriendsDB.getFriends = (userId) => {
 //   return new Promise(function (resolve, reject){
 //     resolve(ddpClient.connection.collections.friends.find());

@@ -5,7 +5,7 @@ import NavigationBar from 'react-native-navbar'
 import Button from 'react-native-button'
 import ddpClient from '../config/db/lib/ddpClient';
 import Accounts from '../config/db/accounts';
-import FriendsDB from '../config/db/friends';
+
 
 export default class SignIn extends Component {
     constructor(props){
@@ -25,17 +25,7 @@ export default class SignIn extends Component {
             username: username
           })
       })
-      .then(
-         ()=>FriendsDB.subscribeToFriends()
-      )
-      .then(
-          ()=>FriendsDB.observeFriends((results)=>{
-            this.props.dispatch({
-              type: 'friends.GET_ALL',
-              friends: results
-            })
-          })
-      ).then(
+     .then(
          ()=> this.props.actions.routes.tabs()()
      )
       .catch((err) => {

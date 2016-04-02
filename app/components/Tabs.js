@@ -10,16 +10,46 @@ import Friends from './Friends'
 
 import ddpClient from '../config/db/lib/ddpClient';
 
-export default class Tabs extends Component {
+import { connect } from 'react-redux';
+
+import FriendsDB from '../config/db/friends';
+
+class Tabs extends Component {
+    constructor(props){
+        super(props)
+    }
+
     logout(){
         this.props.dispatch({
             type: 'LOGOUT'
         })
+        FriendsDB.stopObserve()
+        this.props.actions.pop()
+        console.log('poped')
         Accounts.signOut().then(()=>{
             console.log("pp out")
             ddpClient.close()
-            this.props.actions.pop()
         })
+    }
+
+    componentWillMount(){
+        FriendsDB.subscribeToFriends()
+        .then(
+            ()=>{
+                FriendsDB.observeFriends((results)=>{
+                    this.props.dispatch({
+                        type: 'friends.GET_ALL',
+                        friends: results
+                    })
+                })
+            }
+        )
+    }
+
+    componentWillUnmount(){
+        //unsubscribe & unobserve
+        console.log('unmount')
+       // FriendsDB.stopObserve()
     }
 
   render() {
@@ -83,3 +113,13 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
 });
+
+const mapStateToProps = state => ({
+    pics: state.pics,
+    user: state.user,
+    friends: state.friends
+});
+
+let TabsC = connect(mapStateToProps)(Tabs)
+
+export default TabsC
